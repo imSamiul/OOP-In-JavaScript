@@ -10,7 +10,7 @@ But the code on specific topics of OOP will be separated in specific file. You j
 
 ## 1. What is Object Oriented Programming? (OOP)
 
-    OOP or Object Oriented Programming is a programming paradigm based on concept of objects.Paradigms means writing style of code, how write and organize code.
+### OOP or Object Oriented Programming is a programming paradigm based on concept of objects.Paradigms means writing style of code, how write and organize code.
 
 We use objects to made (describe) real-world or abstract features.
 
@@ -43,7 +43,7 @@ We generally follow four fundamental principles to create a class.
 
 ## Abstraction:
 
-    Abstraction is ignoring or hiding details that don't matter, allowing us to get an overview perspective of the thing we're implementing, instead of messing with details that don't really matter to our implementation.
+### Abstraction is ignoring or hiding details that don't matter, allowing us to get an overview perspective of the thing we're implementing, instead of messing with details that don't really matter to our implementation.
 
 This is definition. If we consider a mobile, we don't need to know the mobile inner functionalities like how home button works or how vibration works or how proximity sensors works. We just know that it is a phone, we use that to call someone, capture a picture, watching movies etc. but we don't need to know how those works behind the scene, we don't need to know the implementations details of those features. This is the abstractions.
 
@@ -53,7 +53,7 @@ In programming example, in web development we use `addEventListener()` function 
 
 ## Encapsulation:
 
-    Encapsulation is keeping properties and methods private inside the class, so they are not accessible from outside the class. Some methods can be exposed as a public interface (API).
+### Encapsulation is keeping properties and methods private inside the class, so they are not accessible from outside the class. Some methods can be exposed as a public interface (API).
 
 So that means there are some properties or methods in a class that we should not give them permission to get modified by the external code. Now this is necessary. For example we have a `checkAuthToken()` method token inside our class which check authentication token. But for some reason if it gets public. Then anywhere from our code we can check the authentication token. That should be a vulnerability issue. So this is why we need encapsulation. We can make the `checkAuthToken()` private so that it can be only accessible inside that class only to check the authentication token.
 
@@ -63,7 +63,7 @@ We public the instance or method which is necessary otherwise make them private.
 
 ## Inheritance:
 
-    Inheritance is making all properties and methods of a certain class available to a child class, forming a hierarchical relationship between classes. This allows us to reuse common logic and to model real-world relationships.
+### Inheritance is making all properties and methods of a certain class available to a child class, forming a hierarchical relationship between classes. This allows us to reuse common logic and to model real-world relationships.
 
 So in simple example inheritance means which quality or attitude you get from your parents. Suppose your father has anger issues. You also got that. This is how you inherit your father attitude inside you. In programming it also works that way. In the below example though it is not Javascript example I hope you will get the concept:
 
@@ -80,7 +80,7 @@ Like I get the attitude from my parents, in OOP admin class inherit the properti
 
 ## Polymorphism:
 
-    Polymorphism means many shapes. Polymorphism is when a child class can overwrite a method which is inherited from a parent class [it's more complex that that, but enough for our purposes].
+### Polymorphism means many shapes. Polymorphism is when a child class can overwrite a method which is inherited from a parent class [it's more complex that that, but enough for our purposes].
 
 In the previous example we use "**user**" class and "**admin**" class. Where user is the parent class and admin is the child class. Here **Admin** class inherit the behavior of parent class (**User**) because admin is also an user, admin also has the the common behavior what the user has. Now admin has extra abilities. There might be a scenario when admin need to modify user properties like user class `login()` method. For Parent love chicken in meal but without spice. His children also love chicken as he/she inherit his/her parents test buds. But problem is children loves spicy chicken not like their parents. So children though inherit the test of loving chicken from his/her parent but with spicy one. So children add more spice to their chicken. This is how modify his test preference.
 
@@ -94,7 +94,7 @@ Like this admin may also has login features but as he is an admin he need to log
 
 In JavaScript, more precisely in sense of traditional OOP JavaScript doesn't provide class. We can't make class in JavaScript. But we can use **Constructor** function alternatively. We can create object using constructor function in JavaScript. So,
 
-    Constructor function is used when we build an object using function.
+### _Constructor function is used when we build an object using function._
 
 ### 2. Difference between constructor function and regular function?
 
@@ -147,7 +147,7 @@ Output: **we get an empty object of Person object.**
 
 ![constructor](./images/constructor-1.png)
 
-**Now we will use `this` keyword in our favour.**
+### 5.2. Function is called and we will use `this` keyword in our favour.
 
 ```
 const Person = function (firstName, birthYear) {
@@ -178,7 +178,9 @@ Now we will add two properties to that empty object `{}` `firstName` and `birthY
 **`firstName` and `birthYear` are the **instance properties**.
 That means firstName and birthYear will be available to all the instance that we create from `Person()` constructor.**
 
-Then the object which was create that will be returned.
+### 5.3. Function will automatically return the object {}
+
+Then the object which was created first will be returned.
 
 Now `Person()` constructor function will be used to create as many object we want. Now `Person()` is working like blueprint of the hoise. Each of the object is created by using this blueprint will be actual house. Like:
 
@@ -208,9 +210,7 @@ Output:
 
 ![constructor](./images/constructor-2.png)
 
-Previously mentioned that we create object from class but here we technically didn't create object from class. Because JavaScript doesn't has any class in the sense of traditional OOP.
-
-    But we create objects from a constructor function.
+Previously mentioned that we create object from class but here we technically didn't create object from class. Because JavaScript doesn't has any class in the sense of traditional OOP. **But we create objects from a constructor function.**
 
 Constructor function is being used to simulate classes from the beginning of JavaScript. So, `samiul`, `abbu`, `borshon` is instance of `Person()`.
 
@@ -247,7 +247,7 @@ Output:
 
 `ammu` is not instance of `Person()` constructor . So it is showing false.
 
-We never create function in constructor. Because if we create thousands or more object using this `Person()` constructor those objects will carry this `calcAge()` method with them. 1000 objects == 1000 copies of `calcAge() ` method which will make performance issue. Rather we will create prototype function.
+We never create function in constructor. Because if we create thousands or more object using this `Person()` constructor those objects will carry this `calcAge()` method with them. 1000 objects == 1000 copies of `calcAge() ` method which will make performance issue. **Rather we will create prototype function.**
 
 ```
 const Person = function (firstName, birthYear) {
