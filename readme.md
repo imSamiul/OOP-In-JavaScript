@@ -51,6 +51,79 @@ In programming example, in web development we use `addEventListener()` function 
 
 ![abstraction](./images/abstraction.png)
 
+**Abstraction means hiding the details and complexity and showing the essentials. Abstraction means hiding the implementation details from the consumer of the object.**
+
+```
+function Circle(radius) {
+  this.radius = radius;
+
+  this.defaultLocation = { x: 0, y: 0 };
+
+  this.computeOptimumLocation = function () {
+    /// ... suppose we will do something here
+  };
+
+  this.draw = function () {
+    this.computeOptimumLocation();
+
+    console.log("draw");
+  };
+}
+const circle = new Circle(10);
+circle.draw();
+
+```
+
+for example if I write
+
+```
+circle.defaultLocation = false;
+```
+
+then the default location will be modified which is actually this:
+
+```
+this.defaultLocation = { x: 0, y: 0 };
+```
+
+We don't want that. We don't want to change the default location get modified by the consumer of the object. I mean we want to put a restrictions on changing default location by anyone. Another example is that suppose we use a para meter in computeOptimum function like this,
+
+From:
+
+```
+  this.computeOptimumLocation = function () {
+    /// ... suppose we will do something here
+  };
+```
+
+To,
+
+```
+  this.computeOptimumLocation = function (factor) {
+  /// ... suppose we will do something here
+};
+```
+
+then if we need to use
+
+```
+circle.computeOptimumLocation(0.1)
+```
+
+we need to pass parameter there. And this must be done every places where we use this function `circle.computeOptimumLocation()`
+
+now if I make it hide from the outside consumer of the object and I make it accessible in
+
+```
+  this.draw = function () {
+    this.computeOptimumLocation(0.1);
+
+    console.log("draw");
+  };
+```
+
+then I just need to change it inside the constructor. So, this is abstraction to hide the implementation details from the consumer of the object.
+
 ## Encapsulation:
 
 ### Encapsulation is keeping properties and methods private inside the class, so they are not accessible from outside the class. Some methods can be exposed as a public interface (API).
@@ -262,6 +335,117 @@ const Person = function (firstName, birthYear) {
 };
 ```
 
+## 3. Prototypes
+
+Each and every function in Javascript has prototype as their property. Constructor function has also prototype.
+
+Every object that we created from a specific constructor function can access those prototype methods which are includes in that constructor function. What I mean is that:
+
+```
+const Person = function (firstName, birthYear) {
+  // Instance properties
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+const samiul = new Person("Samiul", 1991);
+
+//creating multiple objects using constructor function
+const abbu = new Person("Rezaul", 1965);
+const borshon = new Person("Borshon", 2005);
+
+console.log(Person.prototype);
+
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
+```
+
+Here we added a new prototype method `calcAge` to the Constructor function called `Person()` by using
+
+```
+Person.prototype.calcAge = function (){
+  console.log(2037-this.birthYear)
+}
+```
+
+Now this protottype method can be access by any object where those object is created by `Person()`. What I mean is that now we can access `calcAge()` in `samiul`, `borshon`, `abbu` like this:
+
+```
+samiul.calcAge();
+abbu.calcAge();
+borshon.calcAge();
+```
+
+Output:
+
+```
+46
+72
+32
+```
+
+The benifit is now a new function is not created everytime we create a new object from `Person()`
+
+```
+ // created everytime
+  this.calcAge = function () {
+    console.log(2037 - this.birthYear);
+  };
+
+```
+
+Instead now we only use one function `calcAge()` for every object and we refer `this.birthYear` to that object because this refer to the object that we call.
+
+Each object has `__proto__`. This is the prototype of `samiul` after adding `calcAge()`
+
+```
+console.log(samiul.__proto__);
+=> {calcAge: ƒ()}
+```
+
+Prototype of `samiul` object is the prototype property of samiul constructor function.
+We create object from `Person()`. All objects created from `Person()` will use same prototype.
+
+```
+console.log(samiul.__proto__ === Person.prototype);
+=> true
+```
+
+`samiul` `__proto__` is the `Person()` prototype method.
+
+```
+console.log(Person.prototype.isPrototypeOf(samiul));
+=>true
+console.log(Person.prototype.isPrototypeOf(Person));
+=>false
+```
+
+`Person.prototype` is indeed the prototype of `samiul` but `Person.prototype` is not prototype of `Person`.
+
+### How `__proto__` comes?
+
+In previous section we knew that when we create a `samiul` from `Person()` then an empty object is created then prototype is linked to it.
+**`calcAge()` is a prototype method that linked to the empty object.**
+
+### Set prototype properties:
+
+```
+Person.prototype.species = "Homo Sapiens";
+console.log(samiul.species, abbu.species);
+==> Homo Sapiens Homo Sapiens
+```
+
+`species` is set for all object that created from `Person()`
+
+```
+console.log(samiul.hasOwnProperty("firstName"));
+==>true
+console.log(samiul.hasOwnProperty("species"));
+==>false
+```
+
+`firstName` is own property but `species` is inherited property.
+
 ### **1. Adding or removing properties**
 
 There are two ways of adding properties in Constructor. One in using
@@ -322,79 +506,6 @@ console.log(keys);
 <br>
 
 ### **3. Abstraction**
-
-### _Abstraction means hiding the details and complexity and showing the essentials. Abstraction means hiding the implementation details from the consumer of the object._
-
-```
-function Circle(radius) {
-  this.radius = radius;
-
-  this.defaultLocation = { x: 0, y: 0 };
-
-  this.computeOptimumLocation = function () {
-    /// ... suppose we will do something here
-  };
-
-  this.draw = function () {
-    this.computeOptimumLocation();
-
-    console.log("draw");
-  };
-}
-const circle = new Circle(10);
-circle.draw();
-
-```
-
-for example if I write
-
-```
-circle.defaultLocation = false;
-```
-
-then the default location will be modified which is actually this:
-
-```
-this.defaultLocation = { x: 0, y: 0 };
-```
-
-We don't want that. We don't want to change the default location get modified by the consumer of the object. I mean we want to put a restrictions on changing default location by anyone. Another example is that suppose we use a para meter in computeOptimum function like this,
-
-From:
-
-```
-  this.computeOptimumLocation = function () {
-    /// ... suppose we will do something here
-  };
-```
-
-To,
-
-```
-  this.computeOptimumLocation = function (factor) {
-  /// ... suppose we will do something here
-};
-```
-
-then if we need to use
-
-```
-circle.computeOptimumLocation(0.1)
-```
-
-we need to pass parameter there. And this must be done every places where we use this function `circle.computeOptimumLocation()`
-
-now if I make it hide from the outside consumer of the object and I make it accessible in
-
-```
-  this.draw = function () {
-    this.computeOptimumLocation(0.1);
-
-    console.log("draw");
-  };
-```
-
-then I just need to change it inside the constructor. So, this is abstraction to hide the implementation details from the consumer of the object.
 
 <br>
 
