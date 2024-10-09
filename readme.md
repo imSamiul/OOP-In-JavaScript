@@ -53,7 +53,7 @@ In programming example, in web development we use `addEventListener()` function 
 
 **Abstraction means hiding the details and complexity and showing the essentials. Abstraction means hiding the implementation details from the consumer of the object.**
 
-```
+```js
 function Circle(radius) {
   this.radius = radius;
 
@@ -76,13 +76,13 @@ circle.draw();
 
 for example if I write
 
-```
+```js
 circle.defaultLocation = false;
 ```
 
 then the default location will be modified which is actually this:
 
-```
+```js
 this.defaultLocation = { x: 0, y: 0 };
 ```
 
@@ -90,7 +90,7 @@ We don't want that. We don't want to change the default location get modified by
 
 From:
 
-```
+```js
   this.computeOptimumLocation = function () {
     /// ... suppose we will do something here
   };
@@ -98,7 +98,7 @@ From:
 
 To,
 
-```
+```js
   this.computeOptimumLocation = function (factor) {
   /// ... suppose we will do something here
 };
@@ -106,7 +106,7 @@ To,
 
 then if we need to use
 
-```
+```js
 circle.computeOptimumLocation(0.1)
 ```
 
@@ -114,7 +114,7 @@ we need to pass parameter there. And this must be done every places where we use
 
 now if I make it hide from the outside consumer of the object and I make it accessible in
 
-```
+```js
   this.draw = function () {
     this.computeOptimumLocation(0.1);
 
@@ -173,7 +173,7 @@ In JavaScript, more precisely in sense of traditional OOP JavaScript doesn't pro
 
 Constructor function is called with **`new`** operator.
 
-```
+```js
 const samiul = new Person("Samiul", 1991);
 ```
 
@@ -181,7 +181,7 @@ const samiul = new Person("Samiul", 1991);
 
 **As OOP convention, to create a construction function we generally use first letter of the function name as Capital.**
 
-```
+```js
 const Person = function (){
 //... code
 }
@@ -192,7 +192,7 @@ const Person = function (){
 
 ### 4. To call a constructor function we use new keyword.
 
-```
+```js
 const Person function (firsName, birthYear){
 // ... Code
 }
@@ -209,7 +209,7 @@ new Person('Samiul', 1998)
 
 ### 5.1. New object ==> {} is created. New empty object is created.
 
-```
+```js
 const Person = function (firstName, birthYear) {
 console.log(this);
 };
@@ -222,7 +222,7 @@ Output: **we get an empty object of Person object.**
 
 ### 5.2. Function is called and we will use `this` keyword in our favour.
 
-```
+```js
 const Person = function (firstName, birthYear) {
 // Instance properties
   this.firstName = firstName;
@@ -236,11 +236,11 @@ console.log(samiul);
 So, in 5.1 scenario what was the `this` key output?
 **an empty object.**
 
-```
+```js
 console.log(this)
 ```
 
-```
+```js
 Person {}
 ```
 
@@ -257,7 +257,7 @@ Then the object which was created first will be returned.
 
 Now `Person()` constructor function will be used to create as many object we want. Now `Person()` is working like blueprint of the hoise. Each of the object is created by using this blueprint will be actual house. Like:
 
-```
+```js
 const Person = function (firstName, birthYear) {
 
   // Instance properties
@@ -289,7 +289,7 @@ Constructor function is being used to simulate classes from the beginning of Jav
 
 To test that:
 
-```
+```js
 const Person = function (firstName, birthYear) {
 
   // Instance properties
@@ -322,7 +322,7 @@ Output:
 
 We never create function in constructor. Because if we create thousands or more object using this `Person()` constructor those objects will carry this `calcAge()` method with them. 1000 objects == 1000 copies of `calcAge() ` method which will make performance issue. **Rather we will create prototype function.**
 
-```
+```js
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -341,7 +341,7 @@ Each and every function in Javascript has prototype as their property. Construct
 
 Every object that we created from a specific constructor function can access those prototype methods which are includes in that constructor function. What I mean is that:
 
-```
+```js
 const Person = function (firstName, birthYear) {
   // Instance properties
   this.firstName = firstName;
@@ -362,7 +362,7 @@ Person.prototype.calcAge = function () {
 
 Here we added a new prototype method `calcAge` to the Constructor function called `Person()` by using
 
-```
+```js
 Person.prototype.calcAge = function (){
   console.log(2037-this.birthYear)
 }
@@ -370,7 +370,7 @@ Person.prototype.calcAge = function (){
 
 Now this protottype method can be access by any object where those object is created by `Person()`. What I mean is that now we can access `calcAge()` in `samiul`, `borshon`, `abbu` like this:
 
-```
+```js
 samiul.calcAge();
 abbu.calcAge();
 borshon.calcAge();
@@ -386,7 +386,7 @@ Output:
 
 The benifit is now a new function is not created everytime we create a new object from `Person()`
 
-```
+```js
  // created everytime
   this.calcAge = function () {
     console.log(2037 - this.birthYear);
@@ -398,7 +398,7 @@ Instead now we only use one function `calcAge()` for every object and we refer `
 
 Each object has `__proto__`. This is the prototype of `samiul` after adding `calcAge()`
 
-```
+```js
 console.log(samiul.__proto__);
 => {calcAge: ƒ()}
 ```
@@ -406,14 +406,14 @@ console.log(samiul.__proto__);
 Prototype of `samiul` object is the prototype property of samiul constructor function.
 We create object from `Person()`. All objects created from `Person()` will use same prototype.
 
-```
+```js
 console.log(samiul.__proto__ === Person.prototype);
 => true
 ```
 
 `samiul` `__proto__` is the `Person()` prototype method.
 
-```
+```js
 console.log(Person.prototype.isPrototypeOf(samiul));
 =>true
 console.log(Person.prototype.isPrototypeOf(Person));
@@ -429,7 +429,7 @@ In previous section we knew that when we create a `samiul` from `Person()` then 
 
 ### Set prototype properties:
 
-```
+```js
 Person.prototype.species = "Homo Sapiens";
 console.log(samiul.species, abbu.species);
 ==> Homo Sapiens Homo Sapiens
@@ -437,7 +437,7 @@ console.log(samiul.species, abbu.species);
 
 `species` is set for all object that created from `Person()`
 
-```
+```js
 console.log(samiul.hasOwnProperty("firstName"));
 ==>true
 console.log(samiul.hasOwnProperty("species"));
@@ -450,7 +450,8 @@ console.log(samiul.hasOwnProperty("species"));
 
 There are two ways of adding properties in Constructor. One in using
 
-```function Circle(radius) {
+```js
+function Circle(radius) {
 this.radius = radius;
 this.draw = function () {
 console.log("draw");
@@ -466,7 +467,7 @@ circle[propertyName] = { x: 1 };
 
 we use brackets when we use property names with **-** or **space** between them like **'center-location'** or **'center location'**. Because we simply can not use
 
-```
+```js
 circle.center-location
 //or
 circle.center location
@@ -476,7 +477,7 @@ because it will give error or show undefined.
 
 To remove properties we use
 
-```
+```js
 delete circle["location"];
 ```
 
@@ -486,7 +487,7 @@ delete circle["location"];
 
 To get all the keys from an object we can use either **for loop** or **Object.keys(objectName)**
 
-```
+```js
 function Circle(radius) {
   this.radius = radius;
   this.draw = function () {
@@ -513,7 +514,7 @@ console.log(keys);
 
 So how can we make those properties private so that we can restrict to use it outside of the constructor. We can do it by making the properties available in local scope but restrict it using in global scope.
 
-```
+```js
 function Circle(radius) {
   // Public member
   this.radius = radius;
@@ -533,7 +534,7 @@ There will be some scenario where we need to use our private properties in our c
 
 Then we will use getters and setters. These getters and setters will be written inside our constructor and then we can call the getters and setters and these getters and setters then will update our private properties inside of our constructor.
 
-```
+```js
 function Circle(radius) {
   // Public member
   this.radius = radius;
@@ -560,7 +561,7 @@ Object.defineProperty(this, "defaultLocation", {
 
 **Inheritance in OOP means inherit something from the parent class**. For example in these above example assume that we created a class named
 
-```
+```js
 function Circle(){
   ///...
 }
@@ -568,7 +569,7 @@ function Circle(){
 
 but what if we create another class named
 
-```
+```js
 function Square(){
   // ...
 }
@@ -576,7 +577,7 @@ function Square(){
 
 Then we may need to re-write same functionalities in both classes. That means we may need to write redundant code which is not optimal for a project. So to reduce redundancy , to reduce the re-writing of the code we can create a parent class named
 
-```
+```js
 function Shape(){
   // ...
 }
@@ -597,7 +598,7 @@ For example in the above examples of ` function Circle(){}` and ` function Squar
 
 Let us consider an object called ` let x = {}`
 
-```
+```js
 let x = {}
 console.log(x)
 =>{}
@@ -616,7 +617,7 @@ When we log the `x={}` object we see the `[[Prototype]]: Object` object which is
 
 Like below: (It is a prototype object. It doesn't have parent object or base object)
 
-```
+```js
 [Prototype]: Object
     constructor: ƒ Object()
     hasOwnProperty: ƒ hasOwnProperty()
@@ -632,7 +633,7 @@ See here it is a prototype object. but this object does not has any prototype fo
 
 For example if we create another object named **y** like this:
 
-```
+```js
 const y = {}
 ```
 
@@ -641,7 +642,7 @@ and we `console log(y)` what we will see?
 As we learn that it is not a prototype object so this `y={}` object should has an prototype object as its parent.
 so the output will be like this:
 
-```
+```js
 console.log(y)
 => {}
     [[Prototype]]: Object
@@ -657,7 +658,7 @@ console.log(y)
 
 Now how to get the prototype object of any JavaScript object. For example to get the prototype of an object of `x={]` we use `Object.getPrototypeOf(x)` like this:
 
-```
+```js
 console.log(Object.getPrototypeOf(x))
 =>  constructor: ƒ Object()
     hasOwnProperty: ƒ hasOwnProperty()
@@ -671,7 +672,7 @@ console.log(Object.getPrototypeOf(x))
 
 Now if we `console.log()` to check if both object `x={} ` and object `y={}` prototypes are same, what will be the output?
 
-```
+```js
 console.log(Object.getPrototypeOf(x) === Object.getPrototypeOf(y))
 ==> true
 ```
@@ -680,7 +681,7 @@ console.log(Object.getPrototypeOf(x) === Object.getPrototypeOf(y))
 
 If we see our previous example what was the `x={}` object? It was like this:
 
-```
+```js
 const x={}
 ```
 
@@ -688,7 +689,7 @@ So, is there any property like `toString()` inside object `x={}`? Answer is **no
 
 But what if we write `x.toString()` , what we will get?
 
-```
+```js
 x.toString()
 => [object Object]
 ```
@@ -702,7 +703,7 @@ The reason behind is that **when we access a property or a method on an object, 
 
 Let's start with an example,
 
-```
+```js
  let myArray = [];
  console.log(myArray)
    []
@@ -741,19 +742,19 @@ All these methods are defined in this object which is **[[Prototype]]:**, we can
 
 But there is another prototype inside of the myArray's parent or prototype of myArray.
 
-```
+```js
 myArray --> Prototype (ArrayBase) --> Prototype (ObjectBase)
 ```
 
 ### we can see there is an another prototype inside this array prototype.
 
-```
+```js
 [[Prototype]]: Object
 ```
 
 If we expand it we get,
 
-```
+```js
 [[Prototype]]: Object
   constructor: ƒ Object()
   hasOwnProperty: ƒ hasOwnProperty()
@@ -770,7 +771,7 @@ So the hierarchy is like this:
 
 ### For Object:
 
-```
+```js
 function Circle(radius) {
   this.radius = radius;
 
@@ -786,7 +787,7 @@ const circle = new Circle(10);
 
 What if we `console.log(circle)`?
 
-```
+```js
 console.log(circle)
 draw: ƒ ()
 radius: 10
@@ -797,7 +798,7 @@ Here we get `[[Prototype]]: Object` for the circle object.
 
 If we expand this `[[Prototype]]: Object` we will again get `[[Prototype]]: Object` inside `[[Prototype]]: Object`:
 
-```
+```js
 [[Prototype]]: Object
   constructor: ƒ Circle(radius)
     [[Prototype]]: Object
@@ -829,7 +830,7 @@ We can create a prototype method.
 
 First of all, what is instance?
 
-```
+```js
 function Circle(radius){
   //Instance members
   this.radius = radius;
@@ -843,7 +844,7 @@ Here `radius` and `draw()` method is an instance of the `Circle` constructor.
 
 Now if we create 100x of object from `Circle()` constructor it will consume more memory. So, we will now convert the draw method to a prototype method.
 
-```
+```js
 function Circle(radius) {
   //Instance members
   this.radius = radius;
@@ -862,7 +863,7 @@ here we can access the prototype of Circle constructor by using `Circle.prototyp
 
 ### We can also overwrite default prototype object.
 
-```
+```js
 const y = {}
 console.log(y)
 => {}
@@ -878,7 +879,7 @@ console.log(y)
 
 What if we want to change the default prototype object `toString` here.
 
-```
+```js
 Circle.prototype.toString = function () {
   return "Circle with radius " + this.radius;
 };
@@ -890,7 +891,7 @@ So, whenever we call `toString` as a rule Javascript engine will search for `toS
 
 ### **8. Iterating Instance and Prototype**
 
-```
+```js
 function Circle(radius) {
   //Instance members
   this.radius = radius;
@@ -906,13 +907,13 @@ const circle = new Circle(10);
 
 **1. Returns instance members**
 
-```
+```js
 console.log(Object.keys(circle)); // Output: ['radius']
 ```
 
 **2. Returns all members (instance + prototype)**
 
-```
+```js
 for (let key in circle) {
   console.log(key); // radius, draw
 }
